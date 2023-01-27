@@ -26,6 +26,7 @@
 -->
 
     <main>
+        @include('cookie-consent::index')
         <div class="bg-gray-900 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14">
             <div class="mx-auto max-w-7xl lg:px-8">
                 <div class="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -37,16 +38,55 @@
                                 <span
                                     class="block bg-gradient-to-r from-teal-200 to-cyan-400 bg-clip-text pb-3 text-transparent sm:pb-5">Productes locals a l'abast de tothom</span>
                             </h1>
-                            <p class="text-base text-gray-300 sm:text-xl lg:text-lg xl:text-xl">Descobreix tots
-                                els productes que hi han a la teva localitat i accedeix a ells amb tan sols un
-                                clic.</p>
                             <div class="mt-10 sm:mt-12">
-                                <form action="#" class="sm:mx-auto sm:max-w-xl lg:mx-0">
+                                <p class="text-base mb-4 text-gray-300 sm:text-xl lg:text-lg xl:text-xl">Introdueix el teu correu electrònic i rep un 10% de descompte a la teva primera compra.</p>
+
+
+
+                                <form action="{{ route('subscribe') }}" method="post" class="sm:mx-auto sm:max-w-xl lg:mx-0">
+                                    @csrf
                                     <div class="sm:flex">
                                         <div class="min-w-0 flex-1">
                                             <label for="email" class="sr-only">Email address</label>
-                                            <input id="email" type="email" placeholder="Correu electrònic"
+                                            <input name="email" type="email" placeholder="Correu electrònic"
                                                    class="block w-full rounded-md border-0 px-4 py-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <div class=" mt-2 rounded-md bg-red-50 p-4">
+                                                        <div class="flex">
+                                                            @foreach ($errors->all() as $error)
+                                                                <div class="flex-shrink-0">
+                                                                    <!-- Heroicon name: mini/x-circle -->
+                                                                    <svg class="w-1/2 h-4 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="ml-3">
+                                                                    <h3 class="text-sm font-medium text-red-800">{{ $error}}</h3>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                            @if (session()->has('status'))
+                                                <div class=" mt-2 rounded-md bg-green-50 p-4">
+                                                    <div class="flex">
+                                                        <div class="flex-shrink-0">
+                                                            <!-- Heroicon name: mini/x-circle -->
+                                                            <svg class="w-1/2 h-4 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </div>
+                                                        <div class="ml-3">
+                                                            <h3 class="text-sm font-medium text-green-800">{{ session('status') }}</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+
                                         </div>
                                         <div class="mt-3 sm:mt-0 sm:ml-3">
                                             <button type="submit"
@@ -55,7 +95,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <p class="mt-3 text-sm text-gray-300 sm:mt-4">Estigues al dia de totes les
+                                    <p class="mt-1 text-sm text-gray-300 sm:mt-4">Estigues al dia de totes les
                                         novetats del comerç d'Ulldecona. Posant el teu correu electrònic,
                                         acceptes les nostres <a
                                             href="#" class="font-medium text-white">condicions de servei</a>.
@@ -69,7 +109,7 @@
                             <!-- Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ -->
                             <img
                                 class="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
-                                src="https://tailwindui.com/img/component-images/cloud-illustration-teal-cyan.svg"
+                                src="favpng_e-commerce-trade-business-advertising.png"
                                 alt="">
                         </div>
                     </div>
@@ -80,7 +120,7 @@
         <!-- Feature section with screenshot -->
         <div class="relative bg-white pt-16 sm:pt-24 lg:pt-32">
             <div class="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
-                <div>
+                <div id="clients">
                     <h2 class="text-lg font-semibold text-cyan-600">Clients</h2>
                     <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Compra de forma
                         diferent, als llocs de sempre</p>
@@ -609,6 +649,7 @@
                 </div>
             </div>
         </div>
+        <script src="{{ asset('js/app.js') }}"></script>
     </main>
     </div>
     </div>
